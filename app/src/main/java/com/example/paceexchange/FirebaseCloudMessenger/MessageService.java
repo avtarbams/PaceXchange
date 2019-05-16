@@ -3,12 +3,15 @@ package com.example.paceexchange.FirebaseCloudMessenger;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.example.paceexchange.AuctionActivity;
 import com.example.paceexchange.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -66,6 +69,12 @@ public class MessageService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setContentInfo("Info");
+        Intent intent = new Intent(getApplicationContext(), AuctionActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                intent, Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+        mNotificationBuilder.setContentIntent(pendingIntent);
 
         mNotificationManager.notify(new Random().nextInt(), mNotificationBuilder.build());
     }
