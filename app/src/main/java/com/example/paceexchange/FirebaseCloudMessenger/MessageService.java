@@ -20,13 +20,15 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 import java.util.Random;
 
+import static android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
+
 public class MessageService extends FirebaseMessagingService {
 
     private NotificationChannel mNotificationChannel;
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mNotificationBuilder;
     private String android_channel_id = "com.example.paceexchange.test";
-
+    public static final String AUCTION_ID = "com.example.paceexchange.auction";
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
@@ -69,12 +71,14 @@ public class MessageService extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setContentInfo("Info");
+                .setContentInfo("info");
         Intent intent = new Intent(getApplicationContext(), BidInAuction.class);
+        intent.putExtra(MessageService.AUCTION_ID,data.get("itemId"));
+        intent.putExtra("documentNumber", body);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 getApplicationContext(),
                 0,
-                intent, Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+                intent, PendingIntent.PARCELABLE_WRITE_RETURN_VALUE);
         mNotificationBuilder.setContentIntent(pendingIntent);
 
         mNotificationManager.notify(new Random().nextInt(), mNotificationBuilder.build());

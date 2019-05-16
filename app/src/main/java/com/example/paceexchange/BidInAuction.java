@@ -1,5 +1,6 @@
 package com.example.paceexchange;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.paceexchange.FirebaseCloudMessenger.MessageService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
@@ -25,10 +28,13 @@ import java.util.Map;
 public class BidInAuction extends AppCompatActivity {
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseInventoryCollection;
+    private CollectionReference mFirebaseAuctionInventoryCollection;
+
     private ArrayList<InventoryData> mCurrentInventorylist;
     private Spinner mInventoryItemSpinner;
     private  ArrayAdapter<String> mSpinnerArrayAdapter;
     private int mCurrentItemPosition;
+    private String mAuctionKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +42,13 @@ public class BidInAuction extends AppCompatActivity {
         setContentView(R.layout.activity_bid_in_auction);
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
+        mFirebaseAuctionInventoryCollection = mFirebaseDatabase.collection("auctionInventory");
+
         mCurrentInventorylist = new ArrayList<>();
         mInventoryItemSpinner = findViewById(R.id.inventoryItemSpinner);
-
+        Intent intent = getIntent();
+        mAuctionKey = intent.getStringExtra(MessageService.AUCTION_ID);
+        Log.d("auction",mAuctionKey+"");
         getUsersCurrentFirebaseInventory();
     }
 
@@ -116,5 +126,13 @@ public class BidInAuction extends AppCompatActivity {
 
     public void addToButton(View view) {
         Log.d("item",mCurrentInventorylist.get(mCurrentItemPosition).toString());
+        addItemToBid();
+    }
+
+    public void addItemToBid(){
+        InventoryData data = mCurrentInventorylist.get(mCurrentItemPosition);
+        SaveBidInAuctionPojo bidInAuctionPojoObject = new SaveBidInAuctionPojo(data.getCategory(),data.getItemID(),data.getTitle(),data.getTradeInFor(),data.getUrl(),data.getTag(),LoggedInUser.getInstance().getmLoogedInUser());
+        Log.d("data",""+data);
+        mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
     }
 }
