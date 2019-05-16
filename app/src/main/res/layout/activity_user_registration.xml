@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCFFFF">
+    android:orientation="vertical"
+    android:background="@drawable/login_gradient"
+    android:padding="50dp"
+    >
 
     <TextView
         android:id="@+id/title"
@@ -12,74 +13,151 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/registration_title"
-        android:layout_marginTop="10sp"
-        android:textSize="22sp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#336666"/>
+        android:fontFamily="@font/kaushan"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#fff"/>
 
     <EditText
         android:id="@+id/firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:layout_marginTop="30sp"
         android:hint="@string/first_name"
         android:textSize="20sp"
-        android:inputType="text"/>
+        android:inputType="textEmailAddress"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:drawablePadding="12dp"
+        android:maxLines="1"
+        android:background="@null"
+        android:layout_marginTop="10sp"
+        android:drawableStart="@drawable/ic_firstname"
+        android:layout_marginBottom="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#f9d7db"/>
 
     <EditText
         android:id="@+id/lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/firstname"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
         android:hint="@string/last_name"
         android:textSize="20sp"
-        android:inputType="text"/>
+        android:inputType="textEmailAddress"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:drawablePadding="12dp"
+        android:maxLines="1"
+        android:background="@null"
+        android:layout_marginTop="10sp"
+            android:drawableStart="@drawable/ic_lastname"
+        android:layout_marginBottom="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#f9d7db"/>
 
     <EditText
         android:id="@+id/graduation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lastname"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
         android:hint="@string/grad_year"
         android:textSize="20sp"
-        android:inputType="number"/>
+        android:inputType="textEmailAddress"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:drawablePadding="12dp"
+        android:maxLines="1"
+        android:background="@null"
+        android:layout_marginTop="10sp"
+        android:drawableStart="@drawable/ic_college_graduation"
+        android:layout_marginBottom="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#f9d7db"/>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/graduation"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
         android:hint="@string/email"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:drawablePadding="12dp"
+        android:maxLines="1"
+        android:background="@null"
+        android:layout_marginTop="10sp"
+        android:drawableStart="@drawable/ic_user"
+        android:layout_marginBottom="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#f9d7db"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/email"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
         android:hint="@string/password"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:drawablePadding="12dp"
+        android:maxLines="1"
+        android:background="@null"
+        android:layout_marginTop="10sp"
+        android:drawableStart="@drawable/ic_key"
+        android:layout_marginBottom="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="25dp"
+        android:background="#f9d7db"/>
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="100sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
+        android:layout_below="@id/passwordInput"
         android:layout_centerInParent="true"
-        android:layout_marginTop="5sp"
+        android:background="@drawable/button_background"
+        android:textColor="#673AB7"
+        android:layout_marginTop="20sp"
         android:text="@string/register_button"
-        android:textSize="15sp" />
+        android:fontFamily="@font/acme"
+        android:clickable="true"
+        android:textSize="20sp" />
 
-</RelativeLayout>
+</LinearLayout>

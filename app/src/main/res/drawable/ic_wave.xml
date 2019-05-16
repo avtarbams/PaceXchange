@@ -17,12 +17,12 @@
           android:centerX="-216.50467"
           android:centerY="512.8034"
           android:type="radial">
-        <item android:offset="0" android:color="#FF0069FF"/>
-        <item android:offset="0.0291" android:color="#FF0269FD"/>
-        <item android:offset="0.0451" android:color="#FF0369FC"/>
-        <item android:offset="0.0601" android:color="#FF0468FB"/>
-        <item android:offset="0.2548" android:color="#FF1165EF"/>
-        <item android:offset="1" android:color="#FF4457C0"/>
+        <item android:offset="0" android:color="#512DA8"/>
+        <item android:offset="0.0291" android:color="#512DA8"/>
+        <item android:offset="0.0451" android:color="#512DA8"/>
+        <item android:offset="0.0601" android:color="#673AB7"/>
+        <item android:offset="0.2548" android:color="#673AB7"/>
+        <item android:offset="1" android:color="#673AB7"/>
       </gradient>
     </aapt:attr>
   </path>

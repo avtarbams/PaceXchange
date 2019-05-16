@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RecyclerAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
@@ -74,7 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView mItemImage;
+        public CircleImageView mItemImage;
         public TextView mItemName, mItemType, mItemTradeFor;
 
         public ViewHolder(@NonNull View itemView, View.OnClickListener rowClickListener) {

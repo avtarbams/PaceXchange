@@ -1,6 +1,10 @@
 package com.example.paceexchange;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,6 +58,8 @@ public class CurrentInventoryActivity extends AppCompatActivity {
     private String mCurrentItemSelectionID;
     private String mUserIdentification;
 
+    private Dialog mDelecteDialog;
+
     public static final String USER_IDENTIFICATION_ADD_ITEM_MESSAGE = "com.example.paceexchange.USERID";
 
 
@@ -72,6 +80,8 @@ public class CurrentInventoryActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
 
+        mDelecteDialog = new Dialog(this);
+
         setButtonClickListener();
         getUsersCurrentFirebaseInventory();
         setRecyclerView();
@@ -90,10 +100,8 @@ public class CurrentInventoryActivity extends AppCompatActivity {
             }
 
         });
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.row_divider_line, null));
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, 0));
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -112,16 +120,6 @@ public class CurrentInventoryActivity extends AppCompatActivity {
             }
         });
 
-        mRemoveItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentItemSelectionID == null) {
-                    Toast.makeText(getApplicationContext(), R.string.remove_error, Toast.LENGTH_LONG).show();
-                } else {
-                    removeItemFromInventory();
-                }
-            }
-        });
 
         mTradeItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,19 +176,6 @@ public class CurrentInventoryActivity extends AppCompatActivity {
 
     }
 
-    private void removeItemFromInventory() {
-
-        mCurrentInventorylist.remove(mRowClickPosition);
-        mAdapter.notifyDataSetChanged();
-
-        mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.delete());
-
-        for (InventoryData object : mCurrentInventorylist) {
-            mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.arrayUnion(object));
-        }
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -200,5 +185,41 @@ public class CurrentInventoryActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+            mDelecteDialog.setContentView(R.layout.delete_modal);
+            Button mDeleteModalYes = mDelecteDialog.findViewById(R.id.delete_modal_yes_button);
+            Button mDeleteModalNo = mDelecteDialog.findViewById(R.id.delete_modal_no_button);
+
+            mDeleteModalNo.setOnClickListener(V-> {
+                mAdapter.notifyDataSetChanged();
+                mDelecteDialog.dismiss();
+            });
+
+            mDeleteModalYes.setOnClickListener(V-> {
+                mCurrentInventorylist.remove(viewHolder.getAdapterPosition());
+                mAdapter.notifyDataSetChanged();
+                mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.delete());
+
+                for (InventoryData object : mCurrentInventorylist) {
+                    mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.arrayUnion(object));
+                }
+                mDelecteDialog.dismiss();
+            });
+
+            mDelecteDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mDelecteDialog.show();
+
+        }
+    };
 
 }
