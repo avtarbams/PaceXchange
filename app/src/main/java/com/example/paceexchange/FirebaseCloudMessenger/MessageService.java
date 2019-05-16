@@ -41,11 +41,12 @@ public class MessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+       // displayFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
 
         if (remoteMessage.getData().isEmpty()) {
             displayFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         } else {
-            displayFirebaseMessage(remoteMessage.getData());
+           displayFirebaseMessage(remoteMessage.getData());
         }
     }
 

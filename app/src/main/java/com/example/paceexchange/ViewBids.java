@@ -44,6 +44,7 @@ public class ViewBids extends AppCompatActivity {
     private int mRowClickPosition;
     private ArrayList<SaveBidInAuctionPojo> mDataList;
     private String mCurrentItemSelectionID;
+    String mUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class ViewBids extends AppCompatActivity {
         startTimer();
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventory = mFirebaseDatabase.collection("auctionInventory");
-        mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventoryx");
+        mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
 
         mCurrentBidlist = new ArrayList<InventoryData>();
         mAcceptDialog = new Dialog(this);
@@ -83,8 +84,6 @@ public class ViewBids extends AppCompatActivity {
         new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 mBidTimerTextView.setText("seconds remaining: " + millisUntilFinished / 1000);
-//                getAuctionDataFromFirebase();
-
             }
 
             public void onFinish() {
@@ -104,6 +103,11 @@ public class ViewBids extends AppCompatActivity {
                 if (map.get("bids") != null) {
                     ArrayList<Object> newArray = (ArrayList<Object>) map.get("bids");
                     storeAuctionData(newArray);
+                }
+                if(map.get("username") != null )
+                {
+                    mUsername = (String)map.get("username");
+                    Log.d("username",mUsername);
                 }
             }
         });
@@ -152,9 +156,12 @@ public class ViewBids extends AppCompatActivity {
                 //data transaction code here
                 int position = viewHolder.getAdapterPosition();
                 SaveBidInAuctionPojo object = mDataList.get(position);
-              //  mFirebaseInventoryCollection.document(object.getUsername()).update()
 
+                Log.d("object",object.toString());
+                mFirebaseInventoryCollection.document(object.getUsername()).update("Items",FieldValue.arrayRemove(object));
+                mFirebaseInventoryCollection.document(mUsername).update("Items",FieldValue.arrayUnion(object));
 
+               // mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
 
 
 
