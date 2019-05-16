@@ -41,7 +41,7 @@
     <string name="remove_item_button_text">Remove Item</string>
     <string name="item_condition_text">Condition:</string>
     <string name="item_value_text">Trade Value:</string>
-    <string name="item_category_type">Product Category:</string>
+    <string name="item_category_type">Select Product Category</string>
     <string name="add_inventory_title">ADD NEW INVENTORY</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="error_new_item_name">You must enter a name for the new item!</string>
@@ -58,7 +58,7 @@
     <string name="inventory_item_display">Trade Value: %s &#8211; Condition: %s &#8211; Category: %s</string>
     <string name="auction_user_item">My Bid: %s     Value: %s</string>
     <string name="auction_owner_display">Current Owner: %s</string>
-    <string name="item_return_text">Trade Category Requested:</string>
+    <string name="item_return_text">Trade Category Requested</string>
     <string name="item_category_inventory_display">Item Category: %s</string>
     <string name="trade_item_requested_inventory_display">My Trade Request: %s</string>
     <string name="remove_error">Error: You must select an item to remove!</string>
@@ -67,7 +67,7 @@
     <string name="firebase_items_reference">"Items"</string>
     <string name="firebase_inventory_reference">"inventory"</string>
     <string name="available_items">Available Items</string>
-    <string name="add_item_to_auction">Add To Auction</string>
+    <string name="add_item_to_auction">Add Item to Auction</string>
     <string name="tag">tag</string>
     <string name="pace_logo">PaceXchange</string>
     <string name="delete_modal_title">Are you sure you want to Delete Item?</string>
@@ -83,6 +83,9 @@
     <string name="accept_bid_modal_title">Are you sure you want to accept bid ?</string>
     <string name="choose_spinner_bid">Select Item from your Inventory to Bid</string>
     <string name="bidder_title">Place your Bid</string>
+    <string name="auction_item_name">Auction Item Name</string>
+    <string name="item_name">Iten Name</string>
+    <string name="add_item_to_inventory">Add Item to Inventory</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>
