@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.example.paceexchange.AuctionActivity;
+import com.example.paceexchange.BidInAuction;
 import com.example.paceexchange.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -69,7 +70,7 @@ public class MessageService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setContentInfo("Info");
-        Intent intent = new Intent(getApplicationContext(), AuctionActivity.class);
+        Intent intent = new Intent(getApplicationContext(), BidInAuction.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 getApplicationContext(),
                 0,

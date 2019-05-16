@@ -79,4 +79,17 @@ public class InventoryData {
     public void setTradeInFor(String tradeInFor) {
         this.tradeInFor = tradeInFor;
     }
+
+    @Override
+    public String toString() {
+        return "InventoryData{" +
+                "category='" + category + '\'' +
+                ", itemID='" + itemID + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", tradeInFor='" + tradeInFor + '\'' +
+                ", tag='" + tag + '\'' +
+                ", mFirestoreDatabase=" + mFirestoreDatabase +
+                '}';
+    }
 }

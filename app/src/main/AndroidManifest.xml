@@ -26,9 +26,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BidInAuction"></activity>
         <activity
             android:name=".AuctionActivity"
-            android:parentActivityName=".UserProfileActivity"></activity>
+            android:parentActivityName=".UserProfileActivity" />
         <activity
             android:name=".CurrentInventoryActivity"
             android:parentActivityName=".UserProfileActivity" />
@@ -46,6 +47,7 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,8 +61,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <service
-            android:name="com.example.paceexchange.FirebaseCloudMessenger.MessageService"
+            android:name=".FirebaseCloudMessenger.MessageService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
