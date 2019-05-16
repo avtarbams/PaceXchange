@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BidInAuction"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:id="@+id/AddItemToBid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/add_item_to_bid"
+        android:textSize="40sp"
+        android:layout_marginTop="80dp"/>
+
+
+    <Spinner
+        android:id="@+id/inventoryItemSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/addToBidButton"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="addToButton"
+        android:text="@string/place_bid"
+        android:textSize="30sp"/>
+
+</LinearLayout>

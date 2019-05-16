@@ -73,6 +73,9 @@
     <string name="delete_modal_title">Are you sure you want to Delete Item?</string>
     <string name="delete_modal_yes">Yes</string>
     <string name="delete_modal_no">No</string>
+    <string name="add_item_to_bid">Add Item To Bid</string>
+    <string name="place_bid">Place Bid</string>
+    <string name="time_left_for_collecting_bids">Time Left for collecting bids</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>

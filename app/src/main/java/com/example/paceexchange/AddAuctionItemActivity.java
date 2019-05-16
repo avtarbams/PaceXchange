@@ -248,8 +248,15 @@ public class AddAuctionItemActivity extends AppCompatActivity {
                 getNewItemData();
                 addItemToFirebaseAuctionInventory();
                 displayNotification();
+                navigateToWaitingPage();
             }
         });
+    }
+
+    public void navigateToWaitingPage()
+    {
+        Intent intent = new Intent(this, ViewBids.class);
+        startActivity(intent);
     }
 
     public void setOnItemMenuClickListener() {
