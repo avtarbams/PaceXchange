@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">PaceExchange</string>
+    <string name="email">Username </string>
+    <string name="profile_email">EMAIL: %s </string>
+    <string name="profile_rating">USER RATING: %s</string>
+    <string name="profile_name_display">%s %s</string>
+    <string name="password">Password </string>
+    <string name="first_name">FIRST NAME: </string>
+    <string name="last_name">LAST NAME: </string>
+    <string name="grad_year">GRADUATION YEAR: </string>
+    <string name="profile_grad_year">GRADUATION YEAR: %s </string>
+    <string name="login_button">LOGIN</string>
+    <string name="register_button">REGISTER</string>
+    <string name="registration_title">PACE EXCHANGE REGISTRATION</string>
+    <string name="logout">LOGOUT</string>
+    <string name="login_title">PACE EXCHANGE LOGIN</string>
+    <string name="empty_login">Please Enter A Complete User Name</string>
+    <string name="empty_password">Please Enter A Complete Password</string>
+    <string name="register_success">Registration Complete</string>
+    <string name="register_fail">Registration Failed. Try Again.</string>
+    <string name="new_user">New User? SignUp Here.</string>
+    <string name="login_fail">LOGIN FAILED. PLEASE TRY AGAIN.</string>
+    <string name="user_profile">USER PROFILE PORTAL</string>
+    <string name="inventory_button">INVENTORY</string>
+    <string name="time_remaining">TIME REMAINING:</string>
+    <string name="start_auction">START BID</string>
+    <string name="auction_live">Live Auction</string>
+    <string name="auction_ended">AUCTION ENDED</string>
+    <string name="seconds_display"> %s seconds</string>
+    <string name="next_item">NEXT ITEM</string>
+    <string name="poor_reputation">USER REPUTATION: POOR</string>
+    <string name="average_reputation">USER REPUTATION: AVERAGE</string>
+    <string name="very_good_reputation">USER REPUTATION: VERY GOOD</string>
+    <string name="excellent_reputation">USER REPUTATION: EXCELLENT</string>
+    <string name="my_inventory_title">My Inventory</string>
+    <string name="auction_Item">AUCTION ITEM</string>
+    <string name="radio_button_condition_new">New</string>
+    <string name="radio_button_condition_used">Used</string>
+    <string name="inventory_add_item_name">Item Name: </string>
+    <string name="add_new_item_button_text">Add Item</string>
+    <string name="remove_item_button_text">Remove Item</string>
+    <string name="item_condition_text">Condition:</string>
+    <string name="item_value_text">Trade Value:</string>
+    <string name="item_category_type">Product Category:</string>
+    <string name="add_inventory_title">ADD NEW INVENTORY</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="error_new_item_name">You must enter a name for the new item!</string>
+    <string name="error_new_item_radio_button">You must select a condition for the new item!</string>
+    <string name="error_new_item_category">You must select a category for the new item!</string>
+    <string name="error_new_item_value">You must assign a trade value to the new item!</string>
+    <string name="lead_bid">Lead Bidder: %s     Value: %s</string>
+    <string name="url_format">"%s"</string>
+    <string name="added_item_notification_title">Pace Exchange Inventory Addition</string>
+    <string name="new_item_added_notification"> %s added successfully to inventory!</string>
+    <string name="item_value_high">High</string>
+    <string name="item_value_medium">Medium</string>
+    <string name="item_value_low">Low</string>
+    <string name="inventory_item_display">Trade Value: %s &#8211; Condition: %s &#8211; Category: %s</string>
+    <string name="auction_user_item">My Bid: %s     Value: %s</string>
+    <string name="auction_owner_display">Current Owner: %s</string>
+    <string name="item_return_text">Trade Category Requested:</string>
+    <string name="item_category_inventory_display">Item Category: %s</string>
+    <string name="trade_item_requested_inventory_display">My Trade Request: %s</string>
+    <string name="remove_error">Error: You must select an item to remove!</string>
+    <string name="take_inventory_picture">Upload Inventory Picture</string>
+    <string name="available_trade_items_title">AVAILABLE TRADE ITEM MARKET</string>
+    <string name="firebase_items_reference">"Items"</string>
+    <string name="firebase_inventory_reference">"inventory"</string>
+    <string name="available_items">Available Items</string>
+    <string name="add_item_to_auction">Add To Auction</string>
+    <string name="tag">tag</string>
+    <string-array name="item_array">
+        <item>Clothing</item>
+        <item>Books</item>
+        <item>Movies</item>
+        <item>Electronics</item>
+        <item>Home Furnishings</item>
+        <item>School Supplies</item>
+    </string-array>
+
+
+</resources>

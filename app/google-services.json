@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "379264075105",
+    "firebase_url": "https://paceexchange-9c8f1.firebaseio.com",
+    "project_id": "paceexchange-9c8f1",
+    "storage_bucket": "paceexchange-9c8f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379264075105:android:a0083683c16ae97c",
+        "android_client_info": {
+          "package_name": "com.example.paceexchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379264075105-4q6guajs1co54aj5csbvtt40a2frj4cq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paceexchange",
+            "certificate_hash": "2318447c50a9cdc985b06a401025a0d40087b743"
+          }
+        },
+        {
+          "client_id": "379264075105-40oob49dqkdlnths76a8guuiutlcnaso.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkSBnC8vZ_GD6NVwSKUHU9USaG-hKRnj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379264075105-40oob49dqkdlnths76a8guuiutlcnaso.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
