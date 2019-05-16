@@ -2,33 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_gradient"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/userInventoryText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:text="@string/available_trade_items_title"
-        android:textSize="20sp"
+        android:fontFamily="@font/kaushan"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:background="#FF0000"/>
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="#FFFFFF"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search For Items via AI"
-        android:onClick="checkItemAI"
-        />
-    <Button
-        android:id="@+id/clearFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear Filter"/>
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/AIbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="@string/SearchAI"
+            android:padding="10dp"
+            android:textColor="#673AB7"
+            android:layout_marginEnd="10dp"
+            android:onClick="checkItemAI"
+            />
+        <Button
+            android:id="@+id/clearFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#673AB7"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:background="@drawable/button_background"
+            android:text="Clear Filter"/>
+
+    </LinearLayout>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
 
 </LinearLayout>

@@ -50,6 +50,7 @@ public class ItemsForTradeActivity extends AppCompatActivity {
     private int mRowClickPosition;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
+    private Button mAIButoon;
 
     private Button mClearButton;
 
@@ -71,6 +72,7 @@ public class ItemsForTradeActivity extends AppCompatActivity {
         mClearButton.setOnClickListener(V-> {
             setRecyclerView();
             mFilteredList.clear();
+            mAIButoon.setText(getText(R.string.SearchAI));
         });
 
         mAllItemsList = new ArrayList<>();
@@ -153,15 +155,14 @@ public class ItemsForTradeActivity extends AppCompatActivity {
             mCurrentItemSelectionID = display.getItemID();
         });
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.row_divider_line, null));
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, 0));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     }
 
     public void checkItemAI(View view) {
+        mAIButoon = view.findViewById(R.id.AIbutton);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -180,7 +181,7 @@ public class ItemsForTradeActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
-
+                            mAIButoon.setText(labels.get(0).getText());
                             for(int i=0; i<mAllItemsList.size();i++){
                                 if(mAllItemsList.get(i).getTag().equalsIgnoreCase(labels.get(0).getText())){
                                     mFilteredList.add(mAllItemsList.get(i));

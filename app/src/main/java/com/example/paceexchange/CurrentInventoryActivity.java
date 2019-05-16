@@ -45,7 +45,7 @@ import java.util.Map;
 
 public class CurrentInventoryActivity extends AppCompatActivity {
 
-    private Button mTradeItemButton, mAddNewItemButton, mRemoveItemButton;
+    private Button mTradeItemButton, mAddNewItemButton;
 
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseInventoryCollection;
@@ -75,7 +75,6 @@ public class CurrentInventoryActivity extends AppCompatActivity {
 
         mTradeItemButton = findViewById(R.id.tradeSelectedItemButton);
         mAddNewItemButton = findViewById(R.id.addInventoryItemButton);
-        mRemoveItemButton = findViewById(R.id.removeInventoryItemButton);
 
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");

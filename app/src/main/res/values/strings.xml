@@ -63,7 +63,7 @@
     <string name="trade_item_requested_inventory_display">My Trade Request: %s</string>
     <string name="remove_error">Error: You must select an item to remove!</string>
     <string name="take_inventory_picture">Upload Inventory Picture</string>
-    <string name="available_trade_items_title">AVAILABLE TRADE ITEM MARKET</string>
+    <string name="available_trade_items_title">Xchange MarketPlace</string>
     <string name="firebase_items_reference">"Items"</string>
     <string name="firebase_inventory_reference">"inventory"</string>
     <string name="available_items">Available Items</string>
@@ -76,6 +76,8 @@
     <string name="add_item_to_bid">Add Item To Bid</string>
     <string name="place_bid">Place Bid</string>
     <string name="time_left_for_collecting_bids">Time Left for collecting bids</string>
+    <string name="my_inventory_subtitle">(Swipe Right to Delete Item)</string>
+    <string name="SearchAI">Search Item AI</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>

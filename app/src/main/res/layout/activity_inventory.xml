@@ -7,22 +7,38 @@
 
     <TextView
         android:id="@+id/userInventoryText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:text="@string/my_inventory_title"
         android:fontFamily="@font/kaushan"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="25dp"
         android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/userInventorySubText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/userInventoryText"
+        android:text="@string/my_inventory_subtitle"
+        android:fontFamily="@font/kaushan"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="#F0ED4E"/>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userInventoryText"
+        android:layout_below="@id/userInventorySubText"
         android:layout_above="@id/buttonSelectionSection"/>
 
     <RelativeLayout
@@ -30,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center">
 
         <Button
@@ -38,7 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:padding="5dp"
+            android:textColor="#673AB7"
+            android:padding="15dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/button_background"
             android:text="@string/auction_Item" />
@@ -48,22 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:padding="5dp"
+            android:padding="15dp"
+            android:textColor="#673AB7"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@id/tradeSelectedItemButton"
             android:background="@drawable/button_background"
             android:text="@string/add_new_item_button_text" />
-
-        <Button
-            android:id="@+id/removeInventoryItemButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:background="@drawable/button_background"
-            android:layout_toEndOf="@id/addInventoryItemButton"
-            android:text="@string/remove_item_button_text" />
 
     </RelativeLayout>
 
