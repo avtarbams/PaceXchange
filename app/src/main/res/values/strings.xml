@@ -71,6 +71,7 @@
     <string name="tag">tag</string>
     <string name="add_item_to_bid">Add Item To Bid</string>
     <string name="place_bid">Place Bid</string>
+    <string name="time_left_for_collecting_bids">Time Left for collecting bids</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>
