@@ -81,6 +81,8 @@
     <string name="my_auction_bids">My Auction Bids</string>
     <string name="my_auction_subtitle">Swipe Right to Accept Bid</string>
     <string name="accept_bid_modal_title">Are you sure you want to accept bid ?</string>
+    <string name="choose_spinner_bid">Select Item from your Inventory to Bid</string>
+    <string name="bidder_title">Place your Bid</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>

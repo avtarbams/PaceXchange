@@ -9,14 +9,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.paceexchange.FirebaseCloudMessenger.MessageService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +27,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BidInAuction extends AppCompatActivity {
     private FirebaseFirestore mFirebaseDatabase;
@@ -36,22 +41,50 @@ public class BidInAuction extends AppCompatActivity {
     private int mCurrentItemPosition;
     private String mAuctionKey;
 
+    private TextView mAuctionTitleTextView, mAuctionCategoryTextView, mAuctionTradeInForTextView, mAuctionPostedByTextView;
+    private CircleImageView mAuctionItemImageCircleView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bid_in_auction);
+        mAuctionItemImageCircleView = findViewById(R.id.itemImage);
+        mAuctionTitleTextView = findViewById(R.id.itemName);
+        mAuctionCategoryTextView = findViewById(R.id.itemType);
+        mAuctionTradeInForTextView = findViewById(R.id.itemTradeFor);
+        mAuctionPostedByTextView = findViewById(R.id.itemPostedBy);
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
         mFirebaseAuctionInventoryCollection = mFirebaseDatabase.collection("auctionInventory");
-
         mCurrentInventorylist = new ArrayList<>();
         mInventoryItemSpinner = findViewById(R.id.inventoryItemSpinner);
         Intent intent = getIntent();
         mAuctionKey = intent.getStringExtra(MessageService.AUCTION_ID);
-        Log.d("auction",mAuctionKey+"");
+        getAuctionItemsDetails();
+
         getUsersCurrentFirebaseInventory();
     }
 
+    private void getAuctionItemsDetails() {
+        DocumentReference docRef = mFirebaseAuctionInventoryCollection.document(mAuctionKey);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        mAuctionTitleTextView.setText(document.getData().get("title").toString());
+                        mAuctionCategoryTextView.setText(document.getData().get("category").toString());
+                        mAuctionTradeInForTextView.setText(document.getData().get("tradeInFor").toString());
+                        mAuctionPostedByTextView.setText( document.getData().get("username").toString());
+                        Picasso.get().load(document.getData().get("url").toString()).fit().centerCrop().into(mAuctionItemImageCircleView);
+                    }
+                } else {
+                    Log.d("Fetch_Failed", task.getException()+"");
+                }
+            }
+        });
+    }
 
 
     public void getUsersCurrentFirebaseInventory() {
@@ -91,8 +124,6 @@ public class BidInAuction extends AppCompatActivity {
             itemTitle[i] = mCurrentInventorylist.get(i).getTitle();
             Log.d("array",itemTitle[i]);
         }
-        Log.d("Arraylist",mCurrentInventorylist.toString());
-
 
         mSpinnerArrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item,

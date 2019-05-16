@@ -1,22 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BidInAuction"
-    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/login_gradient"
     >
+
+    <TextView
+        android:id="@+id/bid_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/bidder_title"
+        android:textSize="30sp"
+        android:textColor="#fff"
+        android:fontFamily="@font/acme"
+        android:layout_marginTop="25dp"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/auction_bid_card"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bid_title"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/itemImage"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="15dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/itemName"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:textColor="#3F3D3D"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/itemType"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:textColor="#5E5959"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/itemTradeFor"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:textColor="#5E5959"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/itemPostedBy"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:textColor="#D61D1D"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 
     <TextView
         android:id="@+id/AddItemToBid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/auction_bid_card"
         android:gravity="center"
-        android:text="@string/add_item_to_bid"
-        android:textSize="40sp"
-        android:layout_marginTop="80dp"/>
+        android:text="@string/choose_spinner_bid"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:fontFamily="@font/poppins"
+        android:layout_marginTop="50dp"/>
 
 
     <Spinner
@@ -24,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:gravity="center"
+        android:layout_below="@+id/AddItemToBid"
         />
 
     <Button
@@ -32,8 +108,11 @@
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:onClick="addToButton"
+        android:background="@drawable/button_background"
         android:text="@string/place_bid"
-        android:textSize="30sp"/>
+        android:layout_below="@+id/inventoryItemSpinner"
+        android:textSize="20sp"/>
 
-</LinearLayout>
+</RelativeLayout>
