@@ -62,11 +62,11 @@ import java.util.Map;
 public class AddInventoryItemActivity extends AppCompatActivity {
 
 
-    private EditText mNewItemInput;
+    private EditText mNewItemInput, mNewItemTagInput;
     private Button mSubmitItemButton, mUploadInventoryPicture;
     private Spinner mUserItemSpinner, mReturnItemSpinner;
     private ArrayAdapter<CharSequence> mItemAdapter;
-    private String mNewItemName, mNewItemCategory, mReturnItemCategory, mUserIdentification, mNewItemImage;
+    private String mNewItemName, mNewImageTag, mNewItemCategory, mReturnItemCategory, mUserIdentification, mNewItemImage;
     private ImageView mImageThumbnail;
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseInventoryCollection;
@@ -95,6 +95,7 @@ public class AddInventoryItemActivity extends AppCompatActivity {
         mUserIdentification = intent.getStringExtra(CurrentInventoryActivity.USER_IDENTIFICATION_ADD_ITEM_MESSAGE);
 
         mNewItemInput = findViewById(R.id.itemNameInput);
+        mNewItemTagInput = findViewById(R.id.itemTagEditText);
         mSubmitItemButton = findViewById(R.id.submitNewItemButton);
         mUserItemSpinner=findViewById(R.id.userItemSpinner);
         mReturnItemSpinner=findViewById(R.id.returnItemSpinner);
@@ -224,17 +225,16 @@ public class AddInventoryItemActivity extends AppCompatActivity {
     public void getNewItemData() {
 
 
-        if (mNewItemInput.getText().toString().isEmpty()) {
+        if (mNewItemInput.getText().toString().isEmpty() || mNewItemTagInput.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.error_new_item_name, Toast.LENGTH_LONG).show();
         } else {
             mNewItemName = mNewItemInput.getText().toString().trim();
+            mNewImageTag = mNewItemTagInput.getText().toString().trim();
         }
     }
 
     public void addItemToFirebaseInventory(){
-
-        mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
-
+        mFirebaseInventoryCollection.document(mUserIdentification).update("Items", FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mNewImageTag)));
     }
 
     public void setOnButtonClickListener() {

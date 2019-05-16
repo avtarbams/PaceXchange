@@ -6,49 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".AddAuctionItemActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:padding="20dp"
+    android:background="@drawable/login_gradient"
+    >
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="25sp"
+        android:fontFamily="@font/kaushan"
+        android:textColor="#fff"
         android:text="@string/add_item_to_auction"
-        android:textSize="20sp" />
+        android:layout_marginBottom="20dp"
+        android:textSize="25sp" />
 
-    <RelativeLayout
-        android:id="@+id/itemNameInputSection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp">
-
-        <TextView
-            android:id="@+id/addItemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/itemNameInput"
-            android:layout_centerVertical="true"
-            android:text="@string/inventory_add_item_name"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/itemNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_toEndOf="@id/addItemName"
-            android:inputType="text" />
-    </RelativeLayout>
+            android:hint="@string/auction_item_name"
+            android:fontFamily="@font/acme"
+            android:textSize="20sp"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawablePadding="12dp"
+            android:maxLines="1"
+            android:background="@null"
+            android:layout_marginTop="10sp"
+            android:drawableStart="@drawable/ic_item"
+            android:layout_marginBottom="10dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:background="#f9d7db"/>
 
-
-    <RelativeLayout
-        android:id="@+id/itemTypeSection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:layout_marginTop="10sp">
 
         <TextView
             android:id="@+id/userItemCategory"
@@ -56,6 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/item_category_type"
+            android:fontFamily="@font/acme"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -64,23 +64,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30sp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#fff"
+            android:layout_marginBottom="20dp"
             android:layout_below="@id/userItemCategory"
             android:textAlignment="center" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/returnItemType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:layout_marginTop="10sp">
 
         <TextView
             android:id="@+id/itemTypeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/acme"
+            android:textColor="#fff"
             android:text="@string/item_return_text"
+            android:layout_gravity="center_horizontal"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -88,35 +86,36 @@
             android:id="@+id/returnItemSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="30sp"
+            android:backgroundTint="#fff"
             android:layout_below="@id/itemTypeText"
             android:textAlignment="center" />
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/itemTagContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp">
-
-        <TextView
-            android:id="@+id/itemTagTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/tag"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/itemTagEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_toEndOf="@id/itemTagTextView"
-            android:inputType="text"
-            android:layout_alignBaseline="@id/itemTagTextView"/>
-    </RelativeLayout>
+            android:hint="@string/tag"
+            android:fontFamily="@font/acme"
+            android:textSize="20sp"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawablePadding="12dp"
+            android:maxLines="1"
+            android:background="@null"
+            android:layout_marginTop="10sp"
+            android:drawableStart="@drawable/ic_tag"
+            android:layout_marginBottom="10dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:background="#f9d7db"/>
+
 
     <com.github.ybq.android.spinkit.SpinKitView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -126,19 +125,24 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:visibility="gone"
-        app:SpinKit_Color="@color/colorPrimary" />
+        app:SpinKit_Color="#fff" />
 
 
     <ImageView
         android:id="@+id/uploadImageThumbnail"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
         android:visibility="gone"/>
 
     <Button
         android:id="@+id/uploadInventoryPicture"
         android:text="@string/take_inventory_picture"
         android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_background"
+        android:padding="5dp"
         android:layout_height="wrap_content" />
 
 
@@ -147,7 +151,9 @@
         android:id="@+id/submitNewItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
         android:layout_gravity="center"
+        android:padding="5dp"
         android:text="@string/add_new_item_button_text"
         android:layout_marginTop="20sp"/>
 
