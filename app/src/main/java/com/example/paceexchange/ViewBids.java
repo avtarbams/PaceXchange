@@ -1,16 +1,26 @@
 package com.example.paceexchange;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
@@ -26,6 +36,13 @@ public class ViewBids extends AppCompatActivity {
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseAuctionInventory;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerAdapter mAdapter;
+    private ArrayList<InventoryData> mCurrentBidlist;
+    private Dialog mAcceptDialog;
+    private int mRowClickPosition;
+    private String mCurrentItemSelectionID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +51,40 @@ public class ViewBids extends AppCompatActivity {
         startTimer();
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventory = mFirebaseDatabase.collection("auctionInventory");
+        mCurrentBidlist = new ArrayList<InventoryData>();
+        mAcceptDialog = new Dialog(this);
+    }
 
+    private void setRecyclerView() {
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mAdapter = new RecyclerAdapter(getApplicationContext(), mCurrentBidlist, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mRowClickPosition = (int) v.getTag();
+                InventoryData display = mAdapter.getItem(mRowClickPosition);
+                mCurrentItemSelectionID = display.getItemID();
+            }
+
+        });
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, 0));
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(mRecyclerView);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     public void startTimer(){
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 mBidTimerTextView.setText("seconds remaining: " + millisUntilFinished / 1000);
-                getAuctionDataFromFirebase();
+//                getAuctionDataFromFirebase();
+
             }
 
             public void onFinish() {
                 mBidTimerTextView.setText("done!");
-               // getAuctionDataFromFirebase();
+                getAuctionDataFromFirebase();
             }
         }.start();
     }
@@ -60,8 +98,6 @@ public class ViewBids extends AppCompatActivity {
                 //items needs to be replaced with the field ID below
                 if (map.get("bids") != null) {
                     ArrayList<Object> newArray = (ArrayList<Object>) map.get("bids");
-                    Log.d("newArray",newArray.toString());
-
                     storeAuctionData(newArray);
                 }
             }
@@ -74,16 +110,43 @@ public class ViewBids extends AppCompatActivity {
             JSONArray arr = new JSONArray(list);
             JSONObject json = arr.optJSONObject(i);
             String category = json.optString("category");
+            String title = json.optString("title");
             String itemID = json.optString("itemID");
             String tag = json.optString("tag");
-            String title = json.optString("tradeInFor");
-            String tradeInFor = json.optString("url");
+            String tradeInFor = json.optString("tradeInFor");
+            String url = json.optString("url");
             String username = json.optString("username");
-            Log.d("json",""+category+itemID+tag+title+tradeInFor+username);
-            //create your arraylist here
-//            mAuctionDatalist.add(new AuctionData(category, itemID, tag, title, tradeInFor));
-//            mAdapter.notifyDataSetChanged();
+            Log.d("jsonArray",""+category+title+itemID+tag+tradeInFor+url+username);
+            mCurrentBidlist.add(new InventoryData(category, title, tradeInFor, itemID, url, tag));
         }
+        setRecyclerView();
     }
+
+    ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+            mAcceptDialog.setContentView(R.layout.accept_bid_modal);
+            Button mDeleteModalYes = mAcceptDialog.findViewById(R.id.delete_modal_yes_button);
+            Button mDeleteModalNo = mAcceptDialog.findViewById(R.id.delete_modal_no_button);
+
+            mDeleteModalNo.setOnClickListener(V-> {
+                mAdapter.notifyDataSetChanged();
+                mAcceptDialog.dismiss();
+            });
+
+            mDeleteModalYes.setOnClickListener(V-> {
+                mAcceptDialog.dismiss();
+            });
+            mAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mAcceptDialog.show();
+
+        }
+    };
 
 }

@@ -63,14 +63,6 @@ public class BidInAuction extends AppCompatActivity {
                 Map<String, Object> map = task.getResult().getData();
                 if (map.get("Items") != null) {
                     ArrayList<Object> newArray = (ArrayList<Object>) map.get("Items");
-                    Iterator i = newArray.iterator();
-                    while (i.hasNext()) {
-                        Log.d("AVTAR", i.next() + "");
-                        //  Object firstKey = map.keySet().toArray()[0];
-                        //  Object valueForFirstKey = map.get(firstKey);
-
-                    }
-
                     storeUserCurrentInventory(newArray);
                 }
             }
@@ -131,7 +123,7 @@ public class BidInAuction extends AppCompatActivity {
 
     public void addItemToBid(){
         InventoryData data = mCurrentInventorylist.get(mCurrentItemPosition);
-        SaveBidInAuctionPojo bidInAuctionPojoObject = new SaveBidInAuctionPojo(data.getCategory(),data.getItemID(),data.getTitle(),data.getTradeInFor(),data.getUrl(),data.getTag(),LoggedInUser.getInstance().getmLoogedInUser());
+        SaveBidInAuctionPojo bidInAuctionPojoObject = new SaveBidInAuctionPojo(data.getCategory(),data.getItemID(),data.getTitle(),data.getUrl(), data.getTradeInFor(), data.getTag(),LoggedInUser.getInstance().getmLoogedInUser());
         Log.d("data",""+data);
         mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
     }

@@ -19,6 +19,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
 
@@ -56,14 +57,14 @@ public class MessageService extends FirebaseMessagingService {
 
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        mNotificationChannel = new NotificationChannel(android_channel_id, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
+//        mNotificationChannel.setDescription("PACE EXCHANGE AUCTION INVITATION");
+//        mNotificationChannel.enableLights(true);
+//        mNotificationChannel.enableVibration(true);
+//        mNotificationChannel.setLightColor(Color.RED);
 
-        mNotificationChannel = new NotificationChannel(android_channel_id, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
-        mNotificationChannel.setDescription("PACE EXCHANGE AUCTION INVITATION");
-        mNotificationChannel.enableLights(true);
-        mNotificationChannel.enableVibration(true);
-        mNotificationChannel.setLightColor(Color.RED);
-
-        mNotificationManager.createNotificationChannel(mNotificationChannel);
+//        mNotificationManager.createNotificationChannel(mNotificationChannel);
 
         mNotificationBuilder = new NotificationCompat.Builder(this, android_channel_id)
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -97,7 +98,7 @@ public class MessageService extends FirebaseMessagingService {
 
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
-        mNotificationBuilder = new NotificationCompat.Builder(this, android_channel_id)
+        mNotificationBuilder = new NotificationCompat.Builder(this, new Random().nextInt() + "")
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)
@@ -107,4 +108,6 @@ public class MessageService extends FirebaseMessagingService {
 
         mNotificationManager.notify(new Random().nextInt(), mNotificationBuilder.build());
     }
+
 }
+

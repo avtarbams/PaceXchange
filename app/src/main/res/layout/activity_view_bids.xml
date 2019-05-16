@@ -1,26 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ViewBids"
-    android:orientation="vertical">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_gradient">
+        <TextView
+            android:id="@+id/userInventoryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/my_auction_bids"
+            android:fontFamily="@font/kaushan"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:textColor="#FFFFFF"/>
 
-    <TextView
-        android:id="@+id/bidCollectionTextView"
+        <TextView
+            android:id="@+id/userInventorySubText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/userInventoryText"
+            android:text="@string/my_auction_subtitle"
+            android:fontFamily="@font/kaushan"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="25dp"
+            android:textColor="#F0ED4E"/>
+
+    <LinearLayout
+        android:id="@+id/timer"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time_left_for_collecting_bids"
-        android:textSize="30sp"
-        android:gravity="center"/>
+        android:layout_below="@+id/userInventorySubText"
+        >
+        <TextView
+            android:id="@+id/bidCollectionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_left_for_collecting_bids"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="#fff"
+            android:gravity="center"/>
 
-    <TextView
-        android:id="@+id/bidCollectionTimerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:gravity="center"/>
+        <TextView
+            android:id="@+id/bidCollectionTimerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="#fff"
+            android:gravity="center"/>
+    </LinearLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/timer"
+           />
 
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/buttonSelectionSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
+
+        </RelativeLayout>
+
+    </RelativeLayout>
