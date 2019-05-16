@@ -5,7 +5,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AuctionInventoryData {
 
-    private String category, itemID, title, url, tradeInFor,tag;
+    private String category;
+    private String itemID;
+    private String title;
+    private String url;
+    private String tradeInFor;
+    private String tag;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
     private FirebaseFirestore mFirestoreDatabase;
 
 
@@ -17,7 +32,7 @@ public class AuctionInventoryData {
         this.tag = tag;
     }
 
-    public AuctionInventoryData(String category, String title, String tradeInFor, String url, String tag) {
+    public AuctionInventoryData(String category, String title, String tradeInFor, String url, String tag,String username) {
 
         mFirestoreDatabase = FirebaseFirestore.getInstance();
         this.category=category;
@@ -26,10 +41,11 @@ public class AuctionInventoryData {
         this.tradeInFor=tradeInFor;
         this.url = url;
         this.tag = tag;
+        this.username = username;
 
     }
 
-    public AuctionInventoryData(String category, String title, String tradeInFor, String itemID, String url, String tag) {
+    public AuctionInventoryData(String category, String title, String tradeInFor, String itemID, String url, String tag,String username) {
 
         this.category=category;
         this.itemID=itemID;

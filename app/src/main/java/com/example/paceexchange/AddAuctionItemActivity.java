@@ -237,7 +237,7 @@ public class AddAuctionItemActivity extends AppCompatActivity {
 //                "romit").update("bids",FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
 
        // mFirebaseAuctionInventoryCollection.add(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage));
-        mFirebaseAuctionInventoryCollection.add(new AuctionInventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mTagName));
+        mFirebaseAuctionInventoryCollection.add(new AuctionInventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mTagName, LoggedInUser.getInstance().getmLoogedInUser()));
     }
 
     public void setOnButtonClickListener() {

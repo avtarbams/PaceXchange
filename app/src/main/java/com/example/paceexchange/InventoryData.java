@@ -15,8 +15,9 @@ public class InventoryData {
     public InventoryData(String category, String title, String tradeInFor, String url) {
 
         mFirestoreDatabase = FirebaseFirestore.getInstance();
-        this.category=category;
         itemID=FirebaseDatabase.getInstance().getReference().push().getKey();
+        this.category=category;
+
         this.title=title;
         this.tradeInFor=tradeInFor;
         this.url = url;

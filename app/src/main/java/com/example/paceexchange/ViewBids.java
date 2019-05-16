@@ -35,12 +35,14 @@ public class ViewBids extends AppCompatActivity {
     private TextView mBidTimerTextView;
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseAuctionInventory;
+    private CollectionReference mFirebaseInventoryCollection;
 
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private ArrayList<InventoryData> mCurrentBidlist;
     private Dialog mAcceptDialog;
     private int mRowClickPosition;
+    private ArrayList<SaveBidInAuctionPojo> mDataList;
     private String mCurrentItemSelectionID;
 
     @Override
@@ -51,8 +53,11 @@ public class ViewBids extends AppCompatActivity {
         startTimer();
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventory = mFirebaseDatabase.collection("auctionInventory");
+        mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventoryx");
+
         mCurrentBidlist = new ArrayList<InventoryData>();
         mAcceptDialog = new Dialog(this);
+        mDataList = new ArrayList<SaveBidInAuctionPojo>();
     }
 
     private void setRecyclerView() {
@@ -117,7 +122,9 @@ public class ViewBids extends AppCompatActivity {
             String url = json.optString("url");
             String username = json.optString("username");
             Log.d("jsonArray",""+category+title+itemID+tag+tradeInFor+url+username);
+
             mCurrentBidlist.add(new InventoryData(category, title, tradeInFor, itemID, url, tag));
+            mDataList.add(new SaveBidInAuctionPojo(category,itemID, title,url, tradeInFor, tag,username));
         }
         setRecyclerView();
     }
@@ -142,6 +149,15 @@ public class ViewBids extends AppCompatActivity {
 
             mDeleteModalYes.setOnClickListener(V-> {
                 mAcceptDialog.dismiss();
+                //data transaction code here
+                int position = viewHolder.getAdapterPosition();
+                SaveBidInAuctionPojo object = mDataList.get(position);
+              //  mFirebaseInventoryCollection.document(object.getUsername()).update()
+
+
+
+
+
             });
             mAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             mAcceptDialog.show();
