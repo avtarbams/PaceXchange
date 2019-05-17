@@ -51,7 +51,7 @@ public class ViewBids extends AppCompatActivity {
     String mSellerUserName;
     String mAuctionDocumentNumber;
 
-    private SaveBidInAuctionPojo mSelectedBidder;
+    private InventoryData mSelectedBidder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,6 @@ public class ViewBids extends AppCompatActivity {
                 if(map.get("username") != null )
                 {
                     mUsername = (String)map.get("username");
-                    Log.d("username",mUsername);
                 }
             }
         });
@@ -170,7 +169,6 @@ public class ViewBids extends AppCompatActivity {
             String tradeInFor = json.optString("tradeInFor");
             String url = json.optString("url");
             String username = json.optString("username");
-            Log.d("jsonArray",""+category+title+itemID+tag+tradeInFor+url+username);
 
             mCurrentBidlist.add(new InventoryData(category, title, tradeInFor, itemID, url, tag));
             mDataList.add(new SaveBidInAuctionPojo(category,itemID, title,url, tradeInFor, tag,username));
@@ -188,23 +186,23 @@ public class ViewBids extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
             mAcceptDialog.setContentView(R.layout.accept_bid_modal);
-            Button mDeleteModalYes = mAcceptDialog.findViewById(R.id.delete_modal_yes_button);
-            Button mDeleteModalNo = mAcceptDialog.findViewById(R.id.delete_modal_no_button);
+            Button mAcceptModalYes = mAcceptDialog.findViewById(R.id.delete_modal_yes_button);
+            Button mAcceptModalNo = mAcceptDialog.findViewById(R.id.delete_modal_no_button);
 
-            mDeleteModalNo.setOnClickListener(V-> {
+            mAcceptModalNo.setOnClickListener(V-> {
                 mAdapter.notifyDataSetChanged();
                 mAcceptDialog.dismiss();
             });
 
-            mDeleteModalYes.setOnClickListener(V-> {
-                mAcceptDialog.dismiss();
+            mAcceptModalYes.setOnClickListener(V-> {
                 //data transaction code here
                 int position = viewHolder.getAdapterPosition();
                 SaveBidInAuctionPojo object = mDataList.get(position);
-                Log.d("object",object.toString());
-                Log.d("selleruser", object.getUsername());
-                mSelectedBidder = object;
+                mSellerUserName = object.getUsername();
+                InventoryData inventoryData = new InventoryData(object.getCategory(), object.getTitle(), object.getTradeInFor(), object.getItemID(), object.getUrl(), object.getTag());
+                mSelectedBidder = inventoryData;
                 getSellerInventoryData(object.getUsername());
+                mAcceptDialog.dismiss();
             });
             mAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             mAcceptDialog.show();
@@ -212,16 +210,13 @@ public class ViewBids extends AppCompatActivity {
         }
     };
 
-    public void updateCollections(SaveBidInAuctionPojo object){
-        mSellerInventory.remove(object);
-        mFirebaseInventoryCollection.document(object.getUsername()).update("Items",FieldValue.delete());
+    public void updateCollections(InventoryData object){
+        mSellerInventory.removeIf(data -> data.getItemID().equalsIgnoreCase(object.getItemID()));
+        mFirebaseInventoryCollection.document(mSellerUserName).update("Items",FieldValue.delete());
         for (InventoryData object1 : mSellerInventory) {
-            mFirebaseInventoryCollection.document(object.getUsername()).update("Items", FieldValue.arrayUnion(object1));
+            mFirebaseInventoryCollection.document(mSellerUserName).update("Items", FieldValue.arrayUnion(object1));
         }
-        Log.d("size",mSellerInventory+"" );
         mFirebaseInventoryCollection.document(mUsername).update("Items", FieldValue.arrayUnion(object));
-//                mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
-
     }
 
 
