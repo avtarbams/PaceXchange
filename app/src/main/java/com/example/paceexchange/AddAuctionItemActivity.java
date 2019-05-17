@@ -30,7 +30,9 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class AddAuctionItemActivity extends AppCompatActivity {
 
@@ -60,12 +63,17 @@ public class AddAuctionItemActivity extends AppCompatActivity {
     private Map<String, Object> mFirebaseInventoryMap;
     private EditText mItemTagEditText;
     private ProgressBar mProgressBar;
+    private Map<String, Object> mFirebaseAuctionMap;
+
+    private String mAuctionDocumentID = new Random().nextInt() + "";
 
     String currentPhotoPath;
 
     private static final String CHANNEL_ID = "com.example.keithinacio.NOTIFICATION";
     private static final String CHANNEL_NAME = "com.example.keithinacio.DICTIONARY_NOTIFICATION";
     private static final String CHANNEL_DESC = "com.example.keithinacio.NEW_WORD_NOTIFICATION";
+    public static final String AUCTION_DOCUMENT = "com.example.avtar.Auction";
+
     private static final int NOTIFICATION_ID = 001;
 
     //Added by Avtar
@@ -93,6 +101,7 @@ public class AddAuctionItemActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventoryCollection = mFirebaseDatabase.collection("auctionInventory");
         mFirebaseInventoryMap = new HashMap<>();
+        mFirebaseAuctionMap = new HashMap<>();
 
         mCurrentInventorylist = new ArrayList<>();
 
@@ -232,12 +241,28 @@ public class AddAuctionItemActivity extends AppCompatActivity {
 
     public void addItemToFirebaseAuctionInventory(){
 
+        mFirebaseAuctionMap.put("category",mNewItemCategory );
+        mFirebaseAuctionMap.put("itemID", FirebaseDatabase.getInstance().getReference().push().getKey());
+        mFirebaseAuctionMap.put("tag",mTagName );
+        mFirebaseAuctionMap.put("title",mNewItemName );
+        mFirebaseAuctionMap.put("tradeInFor",mReturnItemCategory );
+        mFirebaseAuctionMap.put("url",mNewItemImage );
+        mFirebaseAuctionMap.put("username",LoggedInUser.getInstance().getmLoogedInUser() );
+
         // mFirebaseAuctionInventoryCollection.document("created by romit").update("bids", FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
 //        mFirebaseAuctionInventoryCollection.document(
 //                "romit").update("bids",FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
 
        // mFirebaseAuctionInventoryCollection.add(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage));
-        mFirebaseAuctionInventoryCollection.add(new AuctionInventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mTagName, LoggedInUser.getInstance().getmLoogedInUser()));
+//        mFirebaseAuctionInventoryCollection.add(new AuctionInventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mTagName, LoggedInUser.getInstance().getmLoogedInUser()));
+        mFirebaseAuctionInventoryCollection.document(mAuctionDocumentID).set(mFirebaseAuctionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                navigateToWaitingPage();
+            }
+        });
+
+
     }
 
     public void setOnButtonClickListener() {
@@ -248,7 +273,6 @@ public class AddAuctionItemActivity extends AppCompatActivity {
                 getNewItemData();
                 addItemToFirebaseAuctionInventory();
                 displayNotification();
-                navigateToWaitingPage();
             }
         });
     }
@@ -256,6 +280,7 @@ public class AddAuctionItemActivity extends AppCompatActivity {
     public void navigateToWaitingPage()
     {
         Intent intent = new Intent(this, ViewBids.class);
+        intent.putExtra(AUCTION_DOCUMENT, mAuctionDocumentID);
         startActivity(intent);
     }
 

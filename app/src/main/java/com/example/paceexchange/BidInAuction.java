@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -87,6 +88,8 @@ public class BidInAuction extends AppCompatActivity {
     }
 
 
+
+
     public void getUsersCurrentFirebaseInventory() {
 
         mFirebaseInventoryCollection.document(LoggedInUser.getInstance().getmLoogedInUser()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -122,7 +125,6 @@ public class BidInAuction extends AppCompatActivity {
         for(int i=0;i<mCurrentInventorylist.size();i++)
         {
             itemTitle[i] = mCurrentInventorylist.get(i).getTitle();
-            Log.d("array",itemTitle[i]);
         }
 
         mSpinnerArrayAdapter = new ArrayAdapter<String>
@@ -157,5 +159,16 @@ public class BidInAuction extends AppCompatActivity {
         SaveBidInAuctionPojo bidInAuctionPojoObject = new SaveBidInAuctionPojo(data.getCategory(),data.getItemID(),data.getTitle(),data.getUrl(), data.getTradeInFor(), data.getTag(),LoggedInUser.getInstance().getmLoogedInUser());
         Log.d("data",""+data);
         mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

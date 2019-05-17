@@ -27,7 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ViewBids"></activity>
-        <activity android:name=".BidInAuction" />
+        <activity android:name=".BidInAuction"
+            android:parentActivityName=".AddAuctionItemActivity"
+            />
         <activity
             android:name=".AuctionActivity"
             android:parentActivityName=".UserProfileActivity" />

@@ -1,6 +1,7 @@
 package com.example.paceexchange;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
@@ -40,11 +41,17 @@ public class ViewBids extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private ArrayList<InventoryData> mCurrentBidlist;
+    private ArrayList<InventoryData> mSellerInventoryList;
     private Dialog mAcceptDialog;
     private int mRowClickPosition;
     private ArrayList<SaveBidInAuctionPojo> mDataList;
+    private ArrayList<InventoryData> mSellerInventory;
     private String mCurrentItemSelectionID;
     String mUsername;
+    String mSellerUserName;
+    String mAuctionDocumentNumber;
+
+    private SaveBidInAuctionPojo mSelectedBidder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +62,14 @@ public class ViewBids extends AppCompatActivity {
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventory = mFirebaseDatabase.collection("auctionInventory");
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
-
+        Intent intent = getIntent();
+        mAuctionDocumentNumber = intent.getStringExtra(AddAuctionItemActivity.AUCTION_DOCUMENT);
         mCurrentBidlist = new ArrayList<InventoryData>();
+        mSellerInventory = new ArrayList<InventoryData>();
         mAcceptDialog = new Dialog(this);
         mDataList = new ArrayList<SaveBidInAuctionPojo>();
+        mSellerInventoryList = new ArrayList<InventoryData>();
+
     }
 
     private void setRecyclerView() {
@@ -81,7 +92,7 @@ public class ViewBids extends AppCompatActivity {
     }
 
     public void startTimer(){
-        new CountDownTimer(1000, 1000) {
+        new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
                 mBidTimerTextView.setText("seconds remaining: " + millisUntilFinished / 1000);
             }
@@ -93,9 +104,43 @@ public class ViewBids extends AppCompatActivity {
         }.start();
     }
 
+    public void getSellerInventoryData(String username) {
+
+        mFirebaseInventoryCollection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                Map<String, Object> map = task.getResult().getData();
+                if (map.get("Items") != null) {
+                    ArrayList<Object> newArray = (ArrayList<Object>) map.get("Items");
+                    storeSellerData(newArray);
+                }
+            }
+        });
+    }
+
+    private void storeSellerData(ArrayList<Object> list) {
+
+        for (int i = 0; i < list.size(); i++) {
+
+            JSONArray arr = new JSONArray(list);
+            JSONObject json = arr.optJSONObject(i);
+            String tradeIn = json.optString("tradeInFor");
+            String category = json.optString("category");
+            String title = json.optString("title");
+            String itemID = json.optString("itemID");
+            String url = json.optString("url");
+            String tag = json.optString("tag");
+            mSellerInventory.add(new InventoryData(category, title, tradeIn, itemID, url, tag));
+        }
+
+        updateCollections(mSelectedBidder);
+
+    }
+
 
     public void getAuctionDataFromFirebase() {
-        mFirebaseAuctionInventory.document("cuFM1OcnXRvWfG8tl6Ol").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        mFirebaseAuctionInventory.document(mAuctionDocumentNumber).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 Map<String, Object> map = task.getResult().getData();
@@ -156,20 +201,28 @@ public class ViewBids extends AppCompatActivity {
                 //data transaction code here
                 int position = viewHolder.getAdapterPosition();
                 SaveBidInAuctionPojo object = mDataList.get(position);
-
                 Log.d("object",object.toString());
-                mFirebaseInventoryCollection.document(object.getUsername()).update("Items",FieldValue.arrayRemove(object));
-                mFirebaseInventoryCollection.document(mUsername).update("Items",FieldValue.arrayUnion(object));
-
-               // mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
-
-
-
+                Log.d("selleruser", object.getUsername());
+                mSelectedBidder = object;
+                getSellerInventoryData(object.getUsername());
             });
             mAcceptDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             mAcceptDialog.show();
 
         }
     };
+
+    public void updateCollections(SaveBidInAuctionPojo object){
+        mSellerInventory.remove(object);
+        mFirebaseInventoryCollection.document(object.getUsername()).update("Items",FieldValue.delete());
+        for (InventoryData object1 : mSellerInventory) {
+            mFirebaseInventoryCollection.document(object.getUsername()).update("Items", FieldValue.arrayUnion(object1));
+        }
+        Log.d("size",mSellerInventory+"" );
+        mFirebaseInventoryCollection.document(mUsername).update("Items", FieldValue.arrayUnion(object));
+//                mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
+
+    }
+
 
 }
