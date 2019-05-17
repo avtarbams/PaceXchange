@@ -41,6 +41,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Map<String, Object> mFirebaseProfileMap;
     private Map<String, Object> mFirebaseInventoryMap;
 
+    private final String PROFILE_URL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +143,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mFirebaseProfileMap.put("Graduation", gradYear);
         mFirebaseProfileMap.put("Email", email);
         mFirebaseProfileMap.put("Reputation", reputation);
+        mFirebaseProfileMap.put("profileUrl", PROFILE_URL);
 
         mFirebaseProfileCollection.document(email).set(mFirebaseProfileMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

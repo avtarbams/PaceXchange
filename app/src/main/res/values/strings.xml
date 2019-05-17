@@ -86,6 +86,7 @@
     <string name="auction_item_name">Auction Item Name</string>
     <string name="item_name">Iten Name</string>
     <string name="add_item_to_inventory">Add Item to Inventory</string>
+    <string name="profile_image_uploaded">Profile Image Uploaded Successfully</string>
     <string-array name="item_array">
         <item>Clothing</item>
         <item>Books</item>

@@ -97,7 +97,7 @@ public class AddAuctionItemActivity extends AppCompatActivity {
         mUploadInventoryPicture = findViewById(R.id.uploadInventoryPicture);
         mImageThumbnail = findViewById(R.id.uploadImageThumbnail);
         mItemTagEditText = findViewById(R.id.itemTagEditText);
-
+        mNewItemImage = "https://drff4istxjic.cloudfront.net/no_photo_640_640_pad.jpg";
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseAuctionInventoryCollection = mFirebaseDatabase.collection("auctionInventory");
         mFirebaseInventoryMap = new HashMap<>();

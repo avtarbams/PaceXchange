@@ -15,9 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -51,6 +54,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private CircleImageView mCircleImageView;
 
     private StorageReference mStorage;
+    private ProgressBar mProgressBar;
 
     private String loggedInUser;
 
@@ -69,7 +73,9 @@ public class UserProfileActivity extends AppCompatActivity {
         mFirestoreInventoryDatabase = FirebaseFirestore.getInstance();
         mFirestoreInventoryCollection = mFirestoreInventoryDatabase.collection("profiles");
         mStorage = FirebaseStorage.getInstance().getReference();
-
+        mProgressBar = (ProgressBar)findViewById(R.id.profile_image_upload_progress);
+        Sprite wave = new Wave();
+        mProgressBar.setIndeterminateDrawable(wave);
         mUserName = findViewById(R.id.name);
         mGraduationDate = findViewById(R.id.graduation);
         mEmail = findViewById(R.id.email);
@@ -177,6 +183,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
                     mCircleImageView.setImageURI(selectedImage);
+                    mProgressBar.setVisibility(View.VISIBLE);
                     Bitmap bitmap = ((BitmapDrawable) mCircleImageView.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -199,6 +206,8 @@ public class UserProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Uri downloadUri = task.getResult();
                                 mFirestoreInventoryCollection.document(mUserIdentification).update("profileUrl", downloadUri.toString());
+                                mProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(getApplicationContext(), getString(R.string.profile_image_uploaded), Toast.LENGTH_LONG).show();
                             } else {
                                 // Handle failures
                                 // ...

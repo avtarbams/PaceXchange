@@ -104,7 +104,7 @@ public class AddInventoryItemActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseFirestore.getInstance();
         mFirebaseInventoryCollection = mFirebaseDatabase.collection("inventory");
         mFirebaseInventoryMap = new HashMap<>();
-
+        mNewItemImage = "https://drff4istxjic.cloudfront.net/no_photo_640_640_pad.jpg";
         mCurrentInventorylist = new ArrayList<>();
 
         mStorage = FirebaseStorage.getInstance().getReference();
