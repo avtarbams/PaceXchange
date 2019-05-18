@@ -64,32 +64,23 @@ public class AddAuctionItemActivity extends AppCompatActivity {
     private EditText mItemTagEditText;
     private ProgressBar mProgressBar;
     private Map<String, Object> mFirebaseAuctionMap;
-
     private String mAuctionDocumentID = new Random().nextInt() + "";
-
     String currentPhotoPath;
-
     private static final String CHANNEL_ID = "com.example.keithinacio.NOTIFICATION";
     private static final String CHANNEL_NAME = "com.example.keithinacio.DICTIONARY_NOTIFICATION";
     private static final String CHANNEL_DESC = "com.example.keithinacio.NEW_WORD_NOTIFICATION";
     public static final String AUCTION_DOCUMENT = "com.example.avtar.Auction";
-
     private static final int NOTIFICATION_ID = 001;
-
-    //Added by Avtar
     static final int REQUEST_IMAGE_CAPTURE = 100;
     private StorageReference mStorage;
-
     private ArrayList<InventoryData> mCurrentInventorylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_auction_item);
-
         Intent intent = getIntent();
         mUserIdentification = intent.getStringExtra(CurrentInventoryActivity.USER_IDENTIFICATION_ADD_ITEM_MESSAGE);
-
         mNewItemInput = findViewById(R.id.itemNameInput);
         mSubmitItemButton = findViewById(R.id.submitNewItemButton);
         mUserItemSpinner=findViewById(R.id.userItemSpinner);
@@ -102,17 +93,13 @@ public class AddAuctionItemActivity extends AppCompatActivity {
         mFirebaseAuctionInventoryCollection = mFirebaseDatabase.collection("auctionInventory");
         mFirebaseInventoryMap = new HashMap<>();
         mFirebaseAuctionMap = new HashMap<>();
-
         mCurrentInventorylist = new ArrayList<>();
-
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgressBar = (ProgressBar)findViewById(R.id.progress);
         Sprite wave = new Wave();
         mProgressBar.setIndeterminateDrawable(wave);
-
         setOnItemMenuClickListener();
         setOnButtonClickListener();
-
         mUploadInventoryPicture.setOnClickListener(V -> {
             dispatchTakePictureIntent();
         });
@@ -208,26 +195,10 @@ public class AddAuctionItemActivity extends AppCompatActivity {
                     }
                 }
             });
-
-//            StorageReference filepath = mStorage.child("InventoryPhotos").child(uri.getLastPathSegment());
-//            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri uri = taskSnapshot.getUploadSessionUri();
-//                    Log.d("UPLOAD", uri + "");
-//
-//                    Toast.makeText(AddInventoryItemActivity.this, "Finished Uploading", Toast.LENGTH_SHORT).show();
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Log.e("exception", e+"");
-//                }
-//            });
         }
     }
 
-
+    //Take user input
     public void getNewItemData() {
 
 
@@ -239,6 +210,7 @@ public class AddAuctionItemActivity extends AppCompatActivity {
         }
     }
 
+    //add's item to Auction Collection in Firebase
     public void addItemToFirebaseAuctionInventory(){
 
         mFirebaseAuctionMap.put("category",mNewItemCategory );
@@ -248,13 +220,6 @@ public class AddAuctionItemActivity extends AppCompatActivity {
         mFirebaseAuctionMap.put("tradeInFor",mReturnItemCategory );
         mFirebaseAuctionMap.put("url",mNewItemImage );
         mFirebaseAuctionMap.put("username",LoggedInUser.getInstance().getmLoogedInUser() );
-
-        // mFirebaseAuctionInventoryCollection.document("created by romit").update("bids", FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
-//        mFirebaseAuctionInventoryCollection.document(
-//                "romit").update("bids",FieldValue.arrayUnion(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage)));
-
-       // mFirebaseAuctionInventoryCollection.add(new InventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage));
-//        mFirebaseAuctionInventoryCollection.add(new AuctionInventoryData(mNewItemCategory, mNewItemName, mReturnItemCategory, mNewItemImage, mTagName, LoggedInUser.getInstance().getmLoogedInUser()));
         mFirebaseAuctionInventoryCollection.document(mAuctionDocumentID).set(mFirebaseAuctionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -315,7 +280,6 @@ public class AddAuctionItemActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

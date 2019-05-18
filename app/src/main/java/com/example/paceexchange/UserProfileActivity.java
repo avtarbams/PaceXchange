@@ -106,6 +106,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 });
     }
 
+    //get and set user profile data for display in activity
     public void setProfileDataFromFirebase() {
 
         DocumentReference docRef = mFirestoreInventoryCollection.document(mUserIdentification);
@@ -126,11 +127,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                         }
                         setUserReputation(Integer.parseInt(document.getData().get("Reputation").toString()));
-                    } else {
-                        Log.d("KLEITH", "No such document");
                     }
-                } else {
-                    Log.d("LEITH", "get failed with ", task.getException());
                 }
             }
         });
@@ -221,7 +218,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * This method sets a click listener to the logout, auction, and invetory buttons
+     * Button click listeners to start activities and pass user ID in intent
      **/
 
     public void setButtonClickListener() {
@@ -239,9 +236,6 @@ public class UserProfileActivity extends AppCompatActivity {
         mAuctionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent intent = new Intent(getApplicationContext(), AuctionActivity.class);
-                intent.putExtra(USER_IDENTIFICATION_INVENTORY_MESSAGE, mUserIdentification);
-                startActivity(intent);*/
                 Intent intent = new Intent(getApplicationContext(), AddAuctionItemActivity.class);
                 intent.putExtra(USER_IDENTIFICATION_INVENTORY_MESSAGE, mUserIdentification);
                 startActivity(intent);

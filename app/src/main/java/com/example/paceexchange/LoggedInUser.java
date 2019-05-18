@@ -1,5 +1,5 @@
 package com.example.paceexchange;
-
+/***Utility class to fetch Logged in User ***/
 public class LoggedInUser {
 
     public String mLoogedInUser;

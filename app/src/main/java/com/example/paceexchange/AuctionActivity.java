@@ -18,20 +18,11 @@ public class AuctionActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private AuctionFragment mItemDisplay, itemFragment, fragment;
     private Handler mainThreadHandler;
-
     private Button mStartBidButton, mNextItemButton;
     private TextView mText, mUserBidItem;
-
     private int mTimer = 60;
-    private int listCounter = 0;
-    private int mCurrentReputationValue;
-
     public static final String BID_ITEM_MESSAGE = "com.example.paceexchange.ITEMMESSAGE";
-
-    private FirebaseDataMaintenanceHelper mFireBaseRetriever;
-
     private String mUserIdentification;
-
     ArrayList<InventoryData> inventoryDataList;
 
     @Override
@@ -49,13 +40,8 @@ public class AuctionActivity extends AppCompatActivity {
         mNextItemButton = findViewById(R.id.nextItemButton);
         mText = findViewById(R.id.number);
 
-      // String mSelectedTradeItemName = getIntent().getStringExtra(CurrentInventoryActivity.EXTRA_MESSAGE_TRADE_ITEM);
-      //  String mSelectedTradeItemValue = getIntent().getStringExtra(CurrentInventoryActivity.EXTRA_MESSAGE_TRADE_ITEM_VALUE);
-      //  mUserBidItem.setText(getResources().getString(R.string.auction_user_item, mSelectedTradeItemName, mSelectedTradeItemValue));
-
         mainThreadHandler = new Handler(Looper.getMainLooper());
 
-       // mFireBaseRetriever = new FirebaseDataMaintenanceHelper();
 
         mItemDisplay = new AuctionFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.itemContainer, mItemDisplay).commit();
@@ -73,16 +59,7 @@ public class AuctionActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 itemFragment = new AuctionFragment();
-                //inventoryDataList = mFireBaseRetriever.getListItem();
-                //mItemDisplay.setURL(inventoryDataList.get(listCounter).getmURL());
-                //mItemDisplay.setItemName((inventoryDataList.get(listCounter).getmItemName()));
-                //mItemDisplay.setItemOwner((inventoryDataList.get(listCounter).getmOwner()));
-
-                listCounter++;
-               // mFireBaseRetriever.getFireStoreItem();
-
                 getSupportFragmentManager().beginTransaction().add(R.id.itemContainer, itemFragment).commit();
-
             }
         });
 
@@ -118,7 +95,6 @@ public class AuctionActivity extends AppCompatActivity {
                             startCountdown();
                         } else {
                             mText.setText(getResources().getString(R.string.auction_ended));
-                            //mFireBaseRetriever.updateDatabaseAfterAuction();
                         }
                     }
                 });
@@ -131,39 +107,6 @@ public class AuctionActivity extends AppCompatActivity {
 
     }
 }
-
-    /*
-    public void getUserReputation(String mWinnerID) {
-
-        if (userID or name ==winner){
-
-
-            mUserDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    mCurrentReputationValue = Integer.parseInt(dataSnapshot.child("mNewUserDefaultReputation").getValue().toString());
-                    setNewUserReputation(mCurrentReputationValue);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-    }
-
-    private void setNewUserReputation(int reputationValue){
-
-        reputationValue++;
-
-        mUserDatabase.child(studentID).child("mNewUserDefaultReputation").setValue(reputationValue);
-
-    }
-
-*/
-
 
 
 

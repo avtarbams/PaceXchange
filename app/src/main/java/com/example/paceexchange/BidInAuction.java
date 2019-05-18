@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.paceexchange.FirebaseCloudMessenger.MessageService;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,16 +33,15 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BidInAuction extends AppCompatActivity {
+
     private FirebaseFirestore mFirebaseDatabase;
     private CollectionReference mFirebaseInventoryCollection;
     private CollectionReference mFirebaseAuctionInventoryCollection;
-
     private ArrayList<InventoryData> mCurrentInventorylist;
     private Spinner mInventoryItemSpinner;
     private  ArrayAdapter<String> mSpinnerArrayAdapter;
     private int mCurrentItemPosition;
     private String mAuctionKey;
-
     private TextView mAuctionTitleTextView, mAuctionCategoryTextView, mAuctionTradeInForTextView, mAuctionPostedByTextView;
     private CircleImageView mAuctionItemImageCircleView;
 
@@ -66,6 +66,8 @@ public class BidInAuction extends AppCompatActivity {
         getUsersCurrentFirebaseInventory();
     }
 
+
+    //Fetch Detail of item on Auction
     private void getAuctionItemsDetails() {
         DocumentReference docRef = mFirebaseAuctionInventoryCollection.document(mAuctionKey);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -87,15 +89,12 @@ public class BidInAuction extends AppCompatActivity {
         });
     }
 
-
-
-
+    //get User's current Inventory
     public void getUsersCurrentFirebaseInventory() {
 
         mFirebaseInventoryCollection.document(LoggedInUser.getInstance().getmLoogedInUser()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
                 Map<String, Object> map = task.getResult().getData();
                 if (map.get("Items") != null) {
                     ArrayList<Object> newArray = (ArrayList<Object>) map.get("Items");
@@ -104,11 +103,10 @@ public class BidInAuction extends AppCompatActivity {
             }
         });
     }
-
+    //parsing The list and adding to arraylist
     private void storeUserCurrentInventory(ArrayList<Object> list) {
 
         for (int i = 0; i < list.size(); i++) {
-
             JSONArray arr = new JSONArray(list);
             JSONObject json = arr.optJSONObject(i);
             String tradeIn = json.optString("tradeInFor");
@@ -117,7 +115,6 @@ public class BidInAuction extends AppCompatActivity {
             String itemID = json.optString("itemID");
             String url = json.optString("url");
             String tag = json.optString("tag");
-
             mCurrentInventorylist.add(new InventoryData(category, title, tradeIn, itemID, url, tag));
         }
 
@@ -144,22 +141,18 @@ public class BidInAuction extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     public void addToButton(View view) {
-        Log.d("item",mCurrentInventorylist.get(mCurrentItemPosition).toString());
         addItemToBid();
     }
 
+    //add Item to bid
     public void addItemToBid(){
         InventoryData data = mCurrentInventorylist.get(mCurrentItemPosition);
         SaveBidInAuctionPojo bidInAuctionPojoObject = new SaveBidInAuctionPojo(data.getCategory(),data.getItemID(),data.getTitle(),data.getUrl(), data.getTradeInFor(), data.getTag(),LoggedInUser.getInstance().getmLoogedInUser());
-        Log.d("data",""+data);
         mFirebaseAuctionInventoryCollection.document(mAuctionKey).update("bids", FieldValue.arrayUnion(bidInAuctionPojoObject));
-
+        Toast.makeText(getApplicationContext(),R.string.toast_bid_placed, Toast.LENGTH_LONG).show();
     }
 
     @Override

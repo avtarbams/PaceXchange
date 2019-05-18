@@ -41,6 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Map<String, Object> mFirebaseProfileMap;
     private Map<String, Object> mFirebaseInventoryMap;
 
+    /*** Default Image Initialized ***/
     private final String PROFILE_URL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
 
@@ -102,7 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         } else {
 
-            /** NOTE: registration authorization set up right now, but we need to get all data including name and grad date into database...for user profile**/
+            /**get registration data from user input and send to firebase database**/
 
             String firstName = mFirstNameEditText.getText().toString().trim();
             String lastName = mLastNameEditText.getText().toString().trim();
@@ -136,6 +137,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    //add data registration data to firebase
     private void addToFirebaseProfileDatabase(String firstName, String lastName, int gradYear, String email, int reputation) {
 
         mFirebaseProfileMap.put("First Name", firstName);
@@ -148,17 +150,16 @@ public class RegistrationActivity extends AppCompatActivity {
         mFirebaseProfileCollection.document(email).set(mFirebaseProfileMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("KEITH", "DocumentSnapshot successfully written!");
             }
         });
     }
 
+    //establish registration data to firebase
     private void establishFirebaseInventoryDatabase(String email) {
 
         mFirebaseInventoryCollection.document(email).set(mFirebaseInventoryMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("KEITH", "DocumentSnapshot successfully written!");
             }
         });
     }

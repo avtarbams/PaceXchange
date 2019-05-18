@@ -51,6 +51,7 @@ public class ViewBids extends AppCompatActivity {
     String mSellerUserName;
     String mAuctionDocumentNumber;
 
+
     private InventoryData mSelectedBidder;
 
     @Override
@@ -91,6 +92,9 @@ public class ViewBids extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
+    /*startTimer() will call the ontick after each second and after the count down if finished,
+    onFinish() is called which will then get the data from firebase for bids placed on the auction  item
+    */
     public void startTimer(){
         new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -138,7 +142,7 @@ public class ViewBids extends AppCompatActivity {
 
     }
 
-
+    //gets the auction data through firebase
     public void getAuctionDataFromFirebase() {
         mFirebaseAuctionInventory.document(mAuctionDocumentNumber).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -156,10 +160,9 @@ public class ViewBids extends AppCompatActivity {
             }
         });
     }
-    //you need to do something like this...but I do not know your keys in the auction database because it looks like they were replaced over
+
     private void storeAuctionData(ArrayList<Object> list) {
         for (int i = 0; i < list.size(); i++) {
-            //"json.optString("*****"); --- below insert whatever the key is...this example is from how we did it for userprofile and inventory
             JSONArray arr = new JSONArray(list);
             JSONObject json = arr.optJSONObject(i);
             String category = json.optString("category");
@@ -194,6 +197,7 @@ public class ViewBids extends AppCompatActivity {
                 mAcceptDialog.dismiss();
             });
 
+            //accept bid
             mAcceptModalYes.setOnClickListener(V-> {
                 //data transaction code here
                 int position = viewHolder.getAdapterPosition();
@@ -210,6 +214,8 @@ public class ViewBids extends AppCompatActivity {
         }
     };
 
+
+    // Logic for adding to to Auctioner's Inventory and removing through bidder
     public void updateCollections(InventoryData object){
         mSellerInventory.removeIf(data -> data.getItemID().equalsIgnoreCase(object.getItemID()));
         mFirebaseInventoryCollection.document(mSellerUserName).update("Items",FieldValue.delete());

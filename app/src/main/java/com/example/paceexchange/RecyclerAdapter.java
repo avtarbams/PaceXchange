@@ -47,14 +47,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         InventoryData inventoryDisplay = mItemList.get(position);
         ViewHolder vHolder = (ViewHolder) viewHolder;
-
         Picasso.get().load(inventoryDisplay.getUrl()).fit().centerCrop().into(vHolder.mItemImage);
         vHolder.mItemName.setText(inventoryDisplay.getTitle());
         vHolder.mItemType.setText(vHolder.itemView.getResources().getString(R.string.item_category_inventory_display, inventoryDisplay.getCategory()));
         vHolder.mItemTradeFor.setText(vHolder.itemView.getResources().getString(R.string.trade_item_requested_inventory_display, inventoryDisplay.getTradeInFor()));
         viewHolder.itemView.setOnClickListener(mRowClickListener);
         viewHolder.itemView.setTag(position);
-
     }
 
 
@@ -81,13 +79,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(@NonNull View itemView, View.OnClickListener rowClickListener) {
             super(itemView);
-
             this.itemView.setOnClickListener(rowClickListener);
             mItemImage = itemView.findViewById(R.id.itemImage);
             mItemName = itemView.findViewById(R.id.itemName);
             mItemType = itemView.findViewById(R.id.itemType);
             mItemTradeFor = itemView.findViewById(R.id.itemTradeFor);
-
         }
     }
 }

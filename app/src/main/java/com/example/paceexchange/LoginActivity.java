@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * This method sets click listener on login button and new user registration link
+     * This method sets click listener on login button and new user registration link; method calls to login and access registration page
      **/
     public void setOnClickListener() {
 
@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * This method validates user email and password, which is stored in firebase. If login accepted, redirect to User Profile
+     * This method validates user email and password, which is stored in Firebase. If login accepted, redirect to User Profile and pass user ID with intent; notify user
+     * if login fails
      **/
     private void loginClient() {
 

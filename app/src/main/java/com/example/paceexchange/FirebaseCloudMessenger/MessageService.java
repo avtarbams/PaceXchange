@@ -31,43 +31,44 @@ public class MessageService extends FirebaseMessagingService {
     private String android_channel_id = "com.example.paceexchange.test";
     public static final String AUCTION_ID = "com.example.paceexchange.auction";
 
+    //generates a registration token for the client app instance
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-
-        Log.d("TOKEN FIREBASE", s);
-
     }
 
+    //message handling upon receipt from Google FCM for display to user
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
        // displayFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
 
         if (remoteMessage.getData().isEmpty()) {
-            displayFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            displayForegroundFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         } else {
-           displayFirebaseMessage(remoteMessage.getData());
+           displayBackgroundFirebaseMessage(remoteMessage.getData());
         }
     }
 
-
-    private void displayFirebaseMessage(Map<String, String> data) {
+    //**BACKGROUND/KILLED APPLICATION DELIVERY**
+    //set notification content and establish channel with NotificationChannel and NotificationCompat.Builder objects
+    private void displayBackgroundFirebaseMessage(Map<String, String> data) {
 
         String title = data.get("title");
         String body = data.get("itemId");
 
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        mNotificationChannel = new NotificationChannel(android_channel_id, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
-//        mNotificationChannel.setDescription("PACE EXCHANGE AUCTION INVITATION");
-//        mNotificationChannel.enableLights(true);
-//        mNotificationChannel.enableVibration(true);
-//        mNotificationChannel.setLightColor(Color.RED);
 
-//        mNotificationManager.createNotificationChannel(mNotificationChannel);
+        mNotificationChannel = new NotificationChannel(android_channel_id, "Notification", NotificationManager.IMPORTANCE_DEFAULT);
+        mNotificationChannel.setDescription("PACE EXCHANGE AUCTION INVITATION");
+        mNotificationChannel.enableLights(true);
+        mNotificationChannel.enableVibration(true);
+        mNotificationChannel.setLightColor(Color.RED);
 
+        mNotificationManager.createNotificationChannel(mNotificationChannel);
+
+        //build notification message with relevant attributes (title, text, icon, etc.)
         mNotificationBuilder = new NotificationCompat.Builder(this, android_channel_id)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
@@ -83,10 +84,13 @@ public class MessageService extends FirebaseMessagingService {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mNotificationBuilder.setContentIntent(pendingIntent);
 
+        //tell notification manager to build the message for display to user
         mNotificationManager.notify(new Random().nextInt(), mNotificationBuilder.build());
     }
 
-    private void displayFirebaseMessage(String title, String body) {
+    //**FOREGROUND APPLICATION DELIVERY**
+    //set notification content and establish channel with NotificationChannel and NotificationCompat.Builder objects
+    private void displayForegroundFirebaseMessage(String title, String body) {
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -99,6 +103,8 @@ public class MessageService extends FirebaseMessagingService {
 
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
+
+        //build notification message with relevant attributes (title, text, icon, etc.)
         mNotificationBuilder = new NotificationCompat.Builder(this, new Random().nextInt() + "")
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
@@ -107,6 +113,7 @@ public class MessageService extends FirebaseMessagingService {
                 .setContentText(body)
                 .setContentInfo("Info");
 
+        //tell notification manager to build the message for display to user
         mNotificationManager.notify(new Random().nextInt(), mNotificationBuilder.build());
     }
 

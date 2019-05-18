@@ -50,17 +50,6 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/tradeSelectedItemButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:textColor="#673AB7"
-            android:padding="15dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/button_background"
-            android:text="@string/auction_Item" />
-
-        <Button
             android:id="@+id/addInventoryItemButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +57,6 @@
             android:padding="15dp"
             android:textColor="#673AB7"
             android:layout_marginEnd="10dp"
-            android:layout_toEndOf="@id/tradeSelectedItemButton"
             android:background="@drawable/button_background"
             android:text="@string/add_new_item_button_text" />
 

@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -91,19 +90,12 @@ public class ItemsForTradeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
                         mSelectedUserIdentification = document.getId();
-                        Log.d("KEITH", mSelectedUserIdentification);
-                        Log.d("KEITH", mUserIdentification);
-
                         if(!mSelectedUserIdentification.equals(mUserIdentification)) {
                             getUsersCurrentFirebaseInventory(mSelectedUserIdentification);
                         }
-
-                        //Log.d("KEITH", document.getId() + " => " + document.getData());
                     }
                 } else {
-                    Log.d("KEITH", "Error getting documents: ", task.getException());
                 }
             }
         });
